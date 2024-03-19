@@ -13,4 +13,26 @@ class BlogPostController extends Controller
         $blogs = BlogPost::getBlogs();
         return view('index', compact('blogs'));
     }
+    public function getOneBlog($id)
+    {
+        $blogPost = BlogPost::findOrFail($id);
+        $comments = Comments::getComments($id);
+
+        return view('view', compact('blogPost', 'comments'));
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required',
+        ]);
+
+        $blog = new BlogPost;
+        $blog->title = $validatedData['title'];
+        $blog->content = $validatedData['content'];
+        $blog->save();
+
+        return redirect()->route('blogs.index');
+    }
 }
