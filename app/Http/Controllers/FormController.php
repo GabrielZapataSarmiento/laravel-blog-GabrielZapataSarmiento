@@ -28,5 +28,24 @@ class FormController extends Controller
         return redirect('/');
     }
 
+    public function edit($id)
+    {
+        $form_action = route('blog.update', ['id' => $id]);
+        $form_button = 'Edit Your Blog';
 
+        return view('form', compact('form_action', 'form_button'));
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $blogPost = BlogPost::findorfail($id);
+
+        $blogPost->title = $request->input('title');
+        $blogPost->content = $request->input('content');
+
+        $blogPost->save();
+
+        return redirect('/');
+    }
 }
