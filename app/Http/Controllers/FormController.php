@@ -11,6 +11,10 @@ class FormController extends Controller
 {
     public function add()
     {
+        if (Auth::guest()) {
+            return redirect()->route('login')->with('msg', 'You need to be logged in to do this');
+        }
+
         $form_action = route('blog.store');
         $form_button = 'Create Your Blog';
 
@@ -64,6 +68,10 @@ class FormController extends Controller
     {
 
         $blogPost = BlogPost::findOrFail($id);
+
+        if ($blogPost->user_id != Auth::id() || Auth::guest()) {
+            return redirect('/')->with('msg', "You don't have permission to do that");
+        }
 
         $blogPost->title = $request->input('title');
         $blogPost->content = $request->input('content');
