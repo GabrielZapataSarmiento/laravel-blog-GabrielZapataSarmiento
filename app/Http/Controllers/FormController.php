@@ -49,7 +49,7 @@ class FormController extends Controller
 
 
         if ($blogPost->user_id != Auth::id() || Auth::guest()) {
-            return redirect('/');
+            return redirect('/')->with('msg', "You don't have permission to do that");
         }
 
 

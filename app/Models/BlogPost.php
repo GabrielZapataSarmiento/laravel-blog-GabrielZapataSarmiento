@@ -27,7 +27,7 @@ class BlogPost extends Model
         $blogPost = BlogPost::findOrFail($id);
 
         if ($blogPost->user_id != Auth::id() || Auth::guest()) {
-            return redirect('/')->with('msg', 'You cant do that');
+            return redirect('/')->with('msg', "You don't have permission to do that");
         }
 
         $blogPost->delete();
