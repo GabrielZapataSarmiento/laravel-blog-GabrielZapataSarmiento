@@ -1,15 +1,12 @@
 @extends('layouts.header')
 
 @section('content')
-    <div class="container mx-auto py-4">
         <div class="flex justify-center">
             <div class="w-full max-w-lg">
                 <div class="bg-white shadow-md rounded-lg p-8">
                     <div class="text-2xl font-bold mb-6">{{ __('Login') }}</div>
-
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-
                         <div class="mb-6">
                             <label for="email" class="block text-sm font-semibold mb-2">{{ __('Email Address') }}</label>
                             <input id="email" type="email" class="form-input mt-1 block w-full @error('email') border-red-500 @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
