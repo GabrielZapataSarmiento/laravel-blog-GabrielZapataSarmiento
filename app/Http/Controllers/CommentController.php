@@ -13,7 +13,7 @@ class CommentController extends Controller
         $comment = new Comments();
 
         if ($comment->user_id != Auth::id() || Auth::guest()) {
-            return redirect()->back()->with('msg', "You don't have permission to do that");
+            return redirect()->route('login')->with('msg', 'You need to be logged in to do this');
         }
 
         $comment->content = $request->input('comment');
