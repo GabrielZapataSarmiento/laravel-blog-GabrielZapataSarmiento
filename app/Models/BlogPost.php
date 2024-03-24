@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class BlogPost extends Model
 {
@@ -27,7 +28,7 @@ class BlogPost extends Model
 
         $blogPost->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('msg', 'Blog has been deleted');
     }
 
 }
