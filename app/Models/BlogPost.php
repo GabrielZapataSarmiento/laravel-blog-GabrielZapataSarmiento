@@ -26,6 +26,10 @@ class BlogPost extends Model
     public function deleteBlog($id){
         $blogPost = BlogPost::findOrFail($id);
 
+        if ($blogPost->user_id != Auth::id() || Auth::guest()) {
+            return redirect('/')->with('msg', 'You cant do that');
+        }
+
         $blogPost->delete();
 
         return redirect()->back()->with('msg', 'Blog has been deleted');
