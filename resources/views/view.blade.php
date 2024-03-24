@@ -15,9 +15,6 @@
                 </form>
             </div>
         </div>
-
-
-    @auth
         <div class="mt-8">
             <h2 class="text-xl font-semibold mb-4">Leave a Comment</h2>
             <form action="{{ route('view.comment.add', ['id' => $blogPost->id]) }}" method="post">
@@ -26,7 +23,6 @@
                 <button type="submit" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Submit</button>
             </form>
         </div>
-        @endauth
         <!-- Comments Section -->
         <div class="mt-8">
             <h2 class="text-xl font-semibold mb-4">Comments</h2>
