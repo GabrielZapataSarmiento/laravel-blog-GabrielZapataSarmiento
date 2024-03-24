@@ -11,6 +11,11 @@ class CommentController extends Controller
     public function add(Request $request, $id)
     {
         $comment = new Comments();
+
+        if ($comment->user_id != Auth::id() || Auth::guest()) {
+            return redirect()->back()->with('msg', "You don't have permission to do that");
+        }
+
         $comment->content = $request->input('comment');
         $comment->blog_id = $id;
         $comment->user_id = Auth::id();
