@@ -25,13 +25,6 @@
                             @enderror
                         </div>
 
-                        <div class="mb-6 flex items-center">
-                            <input class="form-checkbox" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                            <label class="ml-2 text-sm" for="remember">
-                                {{ __('Remember Me') }}
-                            </label>
-                        </div>
-
                         <div class="mb-0">
                             <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
                                 {{ __('Login') }}
