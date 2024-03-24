@@ -23,9 +23,9 @@
             <div class="hidden lg:flex lg:gap-x-12">
                 <a href="/" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
                 <a href="{{ route('blog.add') }}" class="text-sm font-semibold leading-6 text-gray-900">Create Blog</a>
-                <a href="#" class="text-sm font-semibold leading-6 text-gray-900">My Blogs</a>
+                <a href="{{ route('myblogs') }}" class="text-sm font-semibold leading-6 text-gray-900">My Blogs</a>
                 @auth
-                    <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Welcome, {{ Auth::user()->name }}</a>
+                    <a class="text-sm font-semibold leading-6 text-gray-900">Welcome, {{ Auth::user()->name }}</a>
                 @endauth
             </div>
             <div class="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -38,4 +38,17 @@
             </div>
         </nav>
     </header>
+    <div class="container mx-auto py-4">
+        <div class="container mx-auto py-4 sm:w-1/2">
+            @if(session('msg'))
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative flex justify-center mb-4" role="alert">
+                    <span class="block sm:inline">{{ session('msg') }}</span>
+                    <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" data-dismiss="alert" aria-label="Close">
+                        <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 5.652a.5.5 0 0 1 0 .707L10.707 10l3.641 3.641a.5.5 0 0 1-.707.707L10 10.707 6.359 14.348a.5.5 0 0 1-.707-.707L9.293 10 5.652 6.359a.5.5 0 0 1 .707-.707L10 9.293l3.641-3.641a.5.5 0 0 1 .707 0z"/></svg>
+                    </button>
+                </div>
+            @endif
+        </div>
+
+
 @yield('content')
