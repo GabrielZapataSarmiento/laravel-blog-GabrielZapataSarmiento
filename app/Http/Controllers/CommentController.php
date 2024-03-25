@@ -12,7 +12,7 @@ class CommentController extends Controller
     {
         $comment = new Comments();
 
-        if ($comment->user_id != Auth::id() || Auth::guest()) {
+        if (Auth::guest()) {
             return redirect()->route('login')->with('msg', 'You need to be logged in to do this');
         }
 
