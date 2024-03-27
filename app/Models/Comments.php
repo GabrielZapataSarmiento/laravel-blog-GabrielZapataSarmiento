@@ -22,20 +22,44 @@ class Comments extends Model
 
     public function deleteComment(Request $request)
     {
-        $request->validate([
-            'comment_id' => 'required|exists:comments,id',
-            'user_id' => 'required|exists:users,id',
-            'blog_id' => 'required|exists:blogposts,id',
-        ]);
+        $commentId = $request->input('comment_id');
+        $blogId = $request->input('blog_id');
 
-        $comment = Comments::findOrFail($request->input('comment_id', 'blog_id'));
-        if ($comment->user_id != Auth::id() || $comment->blog_id != $request->input('blog_id')) {
-            return redirect()->back();
+        $comment = Comments::findOrFail($commentId);
+
+        if ($comment->user_id != auth()->id() || $comment->blog_id != $blogId) {
+            return redirect()->route('blogs.show', ['id' => $blogId])->with('msg', "Wacthu tryna do boyy???!");
         }
 
         $comment->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('msg', "Your comment has been deleted.");
+    }
+
+    public function add(Request $request,)
+    {
+        $validatedData = $request->validate([
+            'comment' => 'required|max:255',
+        ]);
+
+        $id = $request->input('id');
+
+        $comment = new Comments();
+
+        if (Auth::guest()) {
+            return redirect()->route('login')->with('msg', 'You need to be logged in to do this');
+        }
+
+        $comment->content = $request->input('comment');
+        $comment->blog_id = $id;
+        $comment->user_id = Auth::id();
+        $comment->username = Auth::user()->name;
+
+        $comment->save();
+
+        return redirect()->back()->with('msg', 'Comment added successfully');
+
+
     }
 
 

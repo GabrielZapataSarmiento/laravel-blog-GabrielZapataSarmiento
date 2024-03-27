@@ -18,25 +18,25 @@ class FormController extends Controller
         $form_action = route('blog.store');
         $form_button = 'Create Your Blog';
 
-
         return view('form', compact('form_action', 'form_button'));
 
     }
 
-    public function edit($id)
+    public function edit(Request $request)
     {
-        $blogPost = BlogPost::findOrFail($id);
+        $id = $request->input('id');
 
+        $blogPost = BlogPost::findOrFail($id);
 
         if ($blogPost->user_id != Auth::id() || Auth::guest()) {
             return redirect('/')->with('msg', "You don't have permission to do that");
         }
 
 
-        $form_action = route('blog.update', ['id' => $id]);
+        $form_action = route('blog.update');
         $form_button = 'Edit Your Blog';
 
-        return view('form', compact('form_action', 'form_button', 'blogPost'));
+        return view('form', compact('form_action', 'form_button', 'id' , 'blogPost'));
 
     }
 

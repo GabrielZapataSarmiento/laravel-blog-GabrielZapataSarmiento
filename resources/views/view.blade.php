@@ -9,22 +9,25 @@
         <div class="flex flex-col mt-4">
             <span class="text-gray-600 mb-2">{{ $likes }}</span>
             <div class="flex">
-                <form action="{{ route('view.like.add', ['id' => $blogPost->id]) }}" method="post">
+                <form action="{{ route('view.like.add') }}" method="post">
                     @csrf
+                    <input type="hidden" name="id" value="{{ $blogPost->id }}">
                     <button name="like" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-2">Like</button>
                 </form>
             </div>
         </div>
         <div class="mt-8">
             <h2 class="text-xl font-semibold mb-4">Leave a Comment</h2>
-            <form action="{{ route('view.comment.add', ['id' => $blogPost->id]) }}" method="post">
+            <form action="{{ route('view.comment.add') }}" method="POST">
                 @csrf
-                <textarea name="comment" id="comment" class="@error('content') border-red-500 @enderror w-full h-32 border-gray-300 rounded-md resize-none p-4 " placeholder="Write your comment here..."></textarea>
-                @error('content')
+                <input type="hidden" name="id" value="{{ $blogPost->id }}">
+                <textarea name="comment" id="comment" class="@error('comment') border-red-500 @enderror w-full h-32 border-gray-300 rounded-md resize-none p-4" placeholder="Write your comment here..."></textarea>
+                @error('comment')
                 <p class="text-red-500 text-sm italic">{{ $message }}</p>
                 @enderror
                 <button type="submit" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Submit</button>
             </form>
+
         </div>
         <!-- Comments Section -->
         <div class="mt-8">

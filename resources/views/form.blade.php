@@ -18,6 +18,7 @@
                     @enderror
             </div>
             <div class="mb-6">
+                <input type="hidden" name="id" value="{{ $blogPost->id ?? '' }}">
                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full focus:outline-none focus:shadow-outline w-full">
                     {{ $form_button }}</button>
             </div>

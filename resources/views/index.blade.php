@@ -10,18 +10,37 @@
                         <div class="p-6">
                             <h2 class="text-2xl font-bold mb-2">{{ $blog->title }}</h2>
                             <p class="text-gray-700 mb-4">{{ substr($blog->content, 0, 150) }}...</p>
-                            <a href="/view/{{ $blog->id }}" class="text-blue-600 hover:underline">Read more...</a>
+                            @if(!$blog->trashed())
+                                <a href="{{ route('blogs.show', ['id' => $blog->id]) }}" class="text-blue-600 hover:underline">Read more...</a>
+                            @endif
                         </div>
                         @auth
                             @if(Auth::id() === $blog->user_id)
                                 <div class="p-4 bg-gray-100">
                                     <ul class="flex justify-between">
-                                        <li><a href="{{ route('blog.edit', ['id' => $blog->id]) }}" class="text-blue-600 hover:underline">Edit</a></li>
-                                        <li><a href="blog/delete/{{ $blog->id }}" class="text-blue-600 hover:underline">Delete</a></li>
+                                        @if($blog->trashed())
+                                            <form action="{{ route('blog.repost') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $blog->id }}">
+                                                <button type="submit" class="text-blue-600 hover:underline">Repost</button>
+                                            </form>
+                                        @else
+                                            <form action="{{ route('blog.edit') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $blog->id }}">
+                                                <button type="submit" class="text-blue-600 hover:underline">Edit</button>
+                                            </form>
+                                            <form action="{{ route('blog.delete') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $blog->id }}">
+                                                <button type="submit" class="text-blue-600 hover:underline">Delete</button>
+                                            </form>
+                                        @endif
                                     </ul>
                                 </div>
                             @endif
                         @endauth
+
                     </div>
                 </div>
             </div>

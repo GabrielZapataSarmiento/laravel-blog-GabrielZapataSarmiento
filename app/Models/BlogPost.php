@@ -8,23 +8,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class BlogPost extends Model
 {
     protected $table = 'blogposts';
     use HasFactory;
     use SoftDeletes;
 
-    public static function getBlogs()
-    {
-        return static::whereNull('deleted_at')->get();
-    }
-
     public function comments()
     {
         return $this->hasMany(Comments::class, 'blog_id');
     }
 
-    public function deleteBlog($id){
+    public function deleteBlog(Request $request){
+
+        $id = $request->input('id');
+
         $blogPost = BlogPost::findOrFail($id);
 
         if ($blogPost->user_id != Auth::id() || Auth::guest()) {
@@ -60,7 +59,10 @@ class BlogPost extends Model
 
     }
 
-    public static function editBlog(Request $request, $id){
+    public static function editBlog(Request $request){
+
+        $id = $request->input('id');
+
 
         $validatedData = $request->validate([
             'title' => 'required|max:50',
