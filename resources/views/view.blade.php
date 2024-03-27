@@ -9,10 +9,10 @@
         <div class="flex flex-col mt-4">
             <span class="text-gray-600 mb-2">{{ $likes }}</span>
             <div class="flex">
-                <form action="{{ route('view.like.add') }}" method="post">
+                <form action="{{ route('view.like.add') }}" method="post" id="likeForm">
                     @csrf
                     <input type="hidden" name="id" value="{{ $blogPost->id }}">
-                    <button name="like" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-2">Like</button>
+                    <button type="submit" class="mt-4 text-blue-500 hover:text-blue-600 font-bold">Like 👍</button>
                 </form>
             </div>
         </div>
@@ -25,7 +25,7 @@
                 @error('comment')
                 <p class="text-red-500 text-sm italic">{{ $message }}</p>
                 @enderror
-                <button type="submit" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Submit</button>
+                <button type="submit" class="mt-4 text-blue-500 hover:text-blue-600 font-bold">Submit</button>
             </form>
 
         </div>
@@ -38,14 +38,14 @@
                     <span class="text-sm text-gray-600">Posted by {{ $comment->username }}</span>
                     @auth
                         @if(Auth::id() === $comment->user_id)
-                    <form action="{{ route('view.comment.delete') }}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <input type="hidden" name="comment_id" value="{{ $comment->id }}">
-                        <input type="hidden" name="user_id" value="{{ $comment->user_id }}">
-                        <input type="hidden" name="blog_id" value="{{ $blogPost->id }}">
-                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2 my-2">Delete</button>
-                    </form>
+                            <form action="{{ route('view.comment.delete') }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+                                <input type="hidden" name="user_id" value="{{ $comment->user_id }}">
+                                <input type="hidden" name="blog_id" value="{{ $blogPost->id }}">
+                                <button type="submit" class="text-red-500 hover:text-red-600 font-bold">Delete</button>
+                            </form>
                         @endif
                     @endauth
                 </div>
