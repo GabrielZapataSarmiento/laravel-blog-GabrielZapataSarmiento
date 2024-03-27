@@ -21,10 +21,10 @@ Route::get('/home', function () { return view('home');});
 
 Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
     Route::get('/add', [FormController::class, 'add'])->name('add');
-    Route::post('/store', [FormController::class, 'store'])->name('store');
+    Route::post('/store', [BlogPost::class, 'addBlog'])->name('store');
 
     Route::get('/edit/{id}', [FormController::class, 'edit'])->name('edit');
-    Route::post('/update/{id}', [FormController::class, 'update'])->name('update');
+    Route::post('/update/{id}', [BlogPost::class, 'editBlog'])->name('update');
 
     Route::get('/delete/{id}', [BlogPost::class, 'deleteBlog'])->name('delete');
 });

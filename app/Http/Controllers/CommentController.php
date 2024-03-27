@@ -10,6 +10,10 @@ class CommentController extends Controller
 {
     public function add(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'comment' => 'required|max:255',
+        ]);
+
         $comment = new Comments();
 
         if (Auth::guest()) {

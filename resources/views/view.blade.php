@@ -19,7 +19,10 @@
             <h2 class="text-xl font-semibold mb-4">Leave a Comment</h2>
             <form action="{{ route('view.comment.add', ['id' => $blogPost->id]) }}" method="post">
                 @csrf
-                <textarea name="comment" id="comment" class="w-full h-32 border-gray-300 rounded-md resize-none p-4" placeholder="Write your comment here..."></textarea>
+                <textarea name="comment" id="comment" class="@error('content') border-red-500 @enderror w-full h-32 border-gray-300 rounded-md resize-none p-4 " placeholder="Write your comment here..."></textarea>
+                @error('content')
+                <p class="text-red-500 text-sm italic">{{ $message }}</p>
+                @enderror
                 <button type="submit" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Submit</button>
             </form>
         </div>
